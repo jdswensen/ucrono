@@ -1,0 +1,6 @@
+[submodule "cmake-modules"]
+	path = cmake-modules
+	url = git@github.com:jdswensen/cmake-modules
+[submodule "libs/uthash"]
+	path = libs/uthash
+	url = git@github.com:troydhanson/uthash
