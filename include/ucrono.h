@@ -38,8 +38,8 @@ typedef struct ucrono_s
 
 void ucrono_sinit ( ucrono_t *ucrono, uint32_t ticks_per_ms );
 uint32_t ucrono_tick ( ucrono_t *ucrono );
-uint8_t ucrono_once_ms ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period );
-uint8_t ucrono_attach_ms ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period );
+uint8_t ucrono_once_ms ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period, void *args );
+uint8_t ucrono_attach_ms ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period, void *args );
 
 #if defined(__cplusplus)
 }

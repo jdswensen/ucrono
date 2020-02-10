@@ -3,7 +3,7 @@
 #include "utlist.h"
 
 void record_init_default ( ucrono_cb_record_t *record );
-uint8_t record_insert ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period );
+uint8_t record_insert ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period, void *args);
 uint8_t record_register_available ( ucrono_t *ucrono );
 uint8_t record_unregister_index ( ucrono_t *ucrono, uint8_t index );
 
@@ -38,27 +38,33 @@ uint32_t ucrono_tick ( ucrono_t *ucrono )
             }
         }
     }
+
+    return 0;
 }
 
-uint8_t ucrono_once_ms ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period )
+uint8_t ucrono_once_ms ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period, void *args )
 {
-    uint8_t index = record_insert(ucrono, cb, period);
+    uint8_t index = record_insert(ucrono, cb, period, args);
     if ( index )
     {
         ucrono->records[index].style = UCRONO_CB_ONCE;
     }
+
+    return 0;
 }
 
-uint8_t ucrono_attach_ms ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period )
+uint8_t ucrono_attach_ms ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period, void *args )
 {
-    uint8_t index = record_insert(ucrono, cb, period);
+    uint8_t index = record_insert(ucrono, cb, period, args);
     if ( index )
     {
         ucrono->records[index].style = UCRONO_CB_PERIODIC;
     }
+
+    return 0;
 }
 
-uint8_t record_insert ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period )
+uint8_t record_insert ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period, void *args )
 {
     uint8_t retval = 0;
 
@@ -68,6 +74,7 @@ uint8_t record_insert ( ucrono_t *ucrono, ucrono_cb_t cb, uint32_t period )
         record_init_default(&ucrono->records[index]);
         ucrono->records[index].match_ms = period;
         ucrono->records[index].cb = cb;
+        ucrono->records[index].args = args;
         LL_APPEND(ucrono->list, &ucrono->records[index]);
         retval = index;
     }
