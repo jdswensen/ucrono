@@ -19,8 +19,8 @@ void main ( void )
 {
     ucrono_t ucrono;
     ucrono_sinit(&ucrono, 1);
-    ucrono_attach_ms(&ucrono, cb, 5);
-    ucrono_once_ms(&ucrono, once, 10);
+    ucrono_attach_ms(&ucrono, cb, 5, NULL);
+    ucrono_once_ms(&ucrono, once, 10, NULL);
 
     struct timespec delay = { 0, 500000 };
 
